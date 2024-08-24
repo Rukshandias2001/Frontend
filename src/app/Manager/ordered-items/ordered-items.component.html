@@ -1,0 +1,32 @@
+<div class="product-container">
+  <table class="product-table">
+    <thead>
+    <tr>
+      <th>Product</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+    <tr *ngFor="let item of selectedItems" class="product-row">
+      <td class="product-image-cell">
+        <img src="{{item.imageUrl}}" alt="Product Image" class="product-image">
+        <div class="product-controls">
+          <button class="add-button" (click)="remove(item)">-</button>
+          <span class="product-quantity">{{item.quantity}}</span>
+          <button class="add-button" (click)="removeItem(item.id)">-</button>
+        </div>
+        <button class="delete-button" (click)="confirmDeletingTheProduct(item.id)">remove</button>
+
+      </td>
+      <td class="product-name-cell">{{item.productName}}</td>
+      <td class="product-name-cell">{{item.price * item.quantity}}</td>
+    </tr>
+
+  </table>
+</div>
+
+<div class="checkout">
+  <button class="checkout-button" (click)="checkoutForm()">Checkout Form</button>
+</div>
+
+<app-total-amount></app-total-amount>

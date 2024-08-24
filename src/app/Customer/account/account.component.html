@@ -1,0 +1,35 @@
+<div class="account-container">
+  <div class="account-box">
+    <div class="profile-pic">
+      <img [src]="userProfileImage" alt="log In">
+    </div>
+    <div class="user-details">
+      <h2>{{userName || 'UserName'}}</h2>
+      <p>{{ email || 'Email'}}</p>
+      <p>{{lastName || 'lastName'}}</p>
+    </div>
+    <div class="sign-out">
+      <button (click)="signOut()" >Sign Out</button>
+    </div>
+  </div>
+
+  <div>
+    <table >
+      <tr>
+        <th>Order Id</th>
+        <th>View Order</th>
+      </tr>
+
+    </table>
+    <tr *ngFor="let order of listOfOrders">
+      <td>
+        {{order.orderId}}
+      </td>
+      <td>
+        <button (click)="viewOrder(order.orderId)">
+          View Order
+        </button>
+      </td>
+    </tr>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="body">
+  <div class="product-container">
+    <div *ngFor="let item of listOfProducts" class="product-card">
+      <img src="{{item.imageUrl}}" alt="Product Image" class="product-image">
+      <div class="product-info">
+        <h2 class="product-title">{{item.productName}}</h2>
+        <p class="product-description">{{item.description}}</p>
+        <div class="product-details">
+          <span class="product-quantity">Quantity: {{item.quantity}}</span>
+          <span class="product-price">{{item.price}} Rs</span>
+        </div>
+        <button class="add-button" (click)="update(item)">Update</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+

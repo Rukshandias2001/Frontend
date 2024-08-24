@@ -1,0 +1,71 @@
+<div class="body">
+  <div class="form-container">
+    <h1>Add Products</h1>
+    <form action="" (ngSubmit)="confirmAddingTheProduct()">
+      <div class="form-group">
+        <label for="productName">Product Name:</label>
+        <input type="text" name="productName" id="productName" [(ngModel)]="productName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" id="quantity" [(ngModel)]="quantity" required>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" name="price" id="price" [(ngModel)]="price" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input type="text" name="description" id="description" [(ngModel)]="description" required>
+      </div>
+
+      <div class="form-group">
+        <label for="image">Image Upload:</label>
+        <input type="file" name="image" id="image" [(ngModel)]="imageUrl" (change)="onFileSelected($event)">
+      </div>
+
+      <div class="form-group">
+        <label>Product Type:</label>
+        <div class="radio-group">
+          <input type="radio" name="product" id="Electronics" value="Electronics" (change)="onProductTypeChange($event)" >
+          <label for="Electronics">Electronics</label>
+          <input type="radio" name="product" id="Clothings" value="Clothings" (change)="onProductTypeChange($event)" >
+          <label for="Clothings">Clothings</label>
+        </div>
+      </div>
+
+      <div *ngIf="categoryId==1">
+        <div class="form-group" >
+          <label for="warrenty">Warranty:</label>
+          <input type="text" name="warrenty" id="warrenty" [(ngModel)]="warrenty">
+        </div>
+
+        <div class="form-group" >
+          <label for="brand">Brand:</label>
+          <input type="text" name="brand" id="brand" [(ngModel)]="brand">
+        </div>
+
+      </div>
+
+      <div *ngIf="categoryId==2">
+        <div class="form-group" >
+          <label for="size">Size:</label>
+          <input type="text" name="size" id="size" [(ngModel)]="size">
+        </div>
+
+        <div class="form-group" >
+          <label for="colour">Colour:</label>
+          <input type="text" name="colour" id="colour" [(ngModel)]="colour">
+        </div>
+
+      </div>
+      <button type="submit">Submit</button>
+
+    </form>
+  </div>
+
+
+</div>

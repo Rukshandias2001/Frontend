@@ -1,0 +1,32 @@
+<div class="body">
+  <div class="cart-container">
+    <a routerLink="/orderedItems">
+      <img src="../../../assets/cart.png" alt="Cart Icon" class="cart-icon" />
+      <p class="item-count">{{numberOfItems}}</p>
+    </a>
+
+  </div>
+
+
+  <div class="categories">
+    <button class="category-button" (click)="showRelevantItem('All')">All</button>
+    <button class="category-button" (click)="showRelevantItem('Electronics')">Electronics</button>
+    <button class="category-button" (click)="showRelevantItem('Clothings')">Clothing</button>
+  </div>
+
+  <div class="product-container">
+    <div *ngFor="let item of listOfProducts" class="product-card">
+      <img src="{{item.imageUrl}}" alt="Product Image" class="product-image">
+      <div class="product-info">
+        <h2 class="product-title">{{item.productName}}</h2>
+        <p class="product-description">{{item.description}}</p>
+        <div class="product-details">
+          <span class="product-quantity">Quantity: {{item.quantity}}</span>
+          <span class="product-price">{{item.price}} Rs</span>
+        </div>
+        <button class="add-button" (click)=" confirmAddingToCart(item)">Add</button>
+        <button class="add-button" (click)="displayDetailsOfProduct(item.id)">View</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <a href="/">My Store</a>
+  </div>
+  <ul class="navbar-nav">
+    <li *ngIf="isAuthenticated()" class="nav-item">
+      <a class="nav-link" routerLink="/addProduct">Add Products</a>
+    </li>
+    <li *ngIf="isAuthenticated()" class="nav-item">
+      <a class="nav-link" routerLink="/displayItems">Display Products</a>
+    </li>
+    <li *ngIf="isAuthenticated()" class="nav-item">
+      <a class="nav-link" routerLink="/orderedItems">Ordered Items</a>
+    </li>
+    <li *ngIf="isAuthenticated()" class="nav-item">
+      <a class="nav-link" routerLink="/checkoutForm">Checkout Form</a>
+    </li>
+    <li *ngIf="isAuthenticated()" class="nav-item">
+      <a class="nav-link" routerLink="/updateProduct">Update Product</a>
+    </li>
+
+    <li *ngIf="isAuthenticated()" class="nav-item">
+      <a class="nav-link" routerLink="/viewBestCustomer">Best Customer</a>
+    </li>
+
+    <li *ngIf="isAuthenticated()" class="nav-item">
+      <a class="nav-link" (click)="signOut()">Sign Out</a>
+    </li>
+
+
+
+
+    <li *ngIf="isAuthenticated()" class="nav-item">
+      <div class="profile-pic">
+          <img routerLink="/account" [src]="profilepic" alt="log In">
+      </div>
+    </li>
+
+
+
+
+  </ul>
+</nav>
