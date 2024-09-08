@@ -90,6 +90,21 @@ export class OrderedItemsComponent implements OnInit{
 
   }
 
+  addItem(item: SelectedItems){
+    item.quantity++;
+    let tempItem = new SelectedItems(item.id,item.productId,item.productName,item.imageUrl,item.type,item.price,1,item.description,item.categoryId,item.email);
+
+      this.selectItemService.saveSelectedList(tempItem).subscribe(
+        (data)=>{
+          if(data){
+            this.calculateTotals();
+
+          }
+        }
+      )
+
+  }
+
 
   confirmDeletingTheProduct(id:number){
     swal.fire({

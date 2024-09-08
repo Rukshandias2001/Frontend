@@ -4,6 +4,10 @@ import {CustomerDtoRequest} from "../../Classes/customer-dto-request";
 import {DashboardDTORequest} from "../../Classes/dashboard-dtorequest";
 
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import {PieChartDTO} from "../../Classes/pie-chart-dto";
+import {Orders} from "../../Classes/orders";
+import {Router} from "@angular/router";
+import {catchError, forkJoin, map, of} from "rxjs";
 
 @Component({
   selector: 'app-top-customer',
@@ -13,6 +17,12 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 export class TopCustomerComponent implements OnInit{
   listOfCustomers!:Array<CustomerDtoRequest>
   listOfData!: Array<DashboardDTORequest>
+  pieChartDatePoints!:Array<PieChartDTO>
+  listOfOrders!:Array<Orders>;
+  email!:String;
+
+
+
 
   listOfDataQuantity!:[]
 
@@ -45,10 +55,13 @@ export class TopCustomerComponent implements OnInit{
     }]
   }
 
+  chartOptions2: any = {};
+  listOfOrdersWithEmails: Array<{ orderId: number, email: string }> = [];
 
 
 
-  constructor(public bestCustomerService:BestCustomerService) {
+
+  constructor(public bestCustomerService:BestCustomerService,private router:Router) {
 
 
   }
@@ -56,6 +69,7 @@ export class TopCustomerComponent implements OnInit{
 
   ngOnInit() {
       this.fetchData();
+      this.fetchListOfOrders();
   }
 
   fetchData(){
@@ -71,6 +85,14 @@ export class TopCustomerComponent implements OnInit{
 
       }
     )
+    this.bestCustomerService.fetchDataForPieCharts().subscribe(
+      (data)=>{
+        this.pieChartDatePoints = data;
+        console.log(data)
+        this.displayPieChart();
+      }
+
+    )
   }
 
 
@@ -83,6 +105,8 @@ export class TopCustomerComponent implements OnInit{
 
       };
     });
+
+
 
     this.chartOptions = {
       title: {
@@ -100,11 +124,65 @@ export class TopCustomerComponent implements OnInit{
     };
   }
 
+  displayPieChart(){
+
+   let pieChartPoints = this.pieChartDatePoints.map((data)=>{
+     return {
+       name:data.type,
+       y:data.percentageOfPoints
+
+     }
+   })
+
+
+    this.chartOptions2 = {
+      animationEnabled: true,
+      theme: "dark2",
+      exportEnabled: true,
+      title: {
+        text: "Type of Sales Percentage"
+      },
+      subtitles: [{
+        text: "Median hours/week"
+      }],
+      data: [{
+        type: "pie", // This is a pie chart
+        indexLabel: "{name}: {y}%", // Shows label and value on the pie slices
+        dataPoints: pieChartPoints // Start with an empty array, this will be populated dynamically
+      }]
+    };
+
+
+  }
+
+  fetchListOfOrders(){
+    this.bestCustomerService.fetchlistOfOrders().subscribe((orders) => {
+      const emailRequests = orders.map((order) => {
+        return this.bestCustomerService.fetchEmailByOrderId(order.orderId).pipe(
+          map((email) => ({ orderId: order.orderId, email })),
+
+          catchError(() => of({ orderId: order.orderId, email: 'No email found' })) // Handle error
+        );
+      });
+
+
+      forkJoin(emailRequests).subscribe((orderWithEmails) => {
+        // @ts-ignore
+        this.listOfOrdersWithEmails = orderWithEmails;
+        console.log(orderWithEmails)
+
+      });
+    });
+
+  }
 
 
 
 
-
+  viewOrder(orderId: number) {
+    console.log(orderId)
+    this.router.navigate(['viewReceipt/'+orderId])
+  }
 
 
 

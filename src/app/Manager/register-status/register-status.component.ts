@@ -49,9 +49,11 @@ export class RegisterStatusComponent implements OnInit {
         }
       );
       const payload = this.decodeToken(response.credential);
+      console.log(payload)
       // Store in session
       sessionStorage.setItem("loggedInUser", JSON.stringify(payload));
-      window.location.reload();
+
+      // window.location.reload();
       // Navigate to home/screen
       this.router.navigate(['account']);
     }

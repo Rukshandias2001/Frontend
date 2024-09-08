@@ -38,8 +38,13 @@ export class AccountComponent implements OnInit{
       this.userProfileImage = user.picture ?? '';
       this.email = user.email ?? '';
       this.lastName = user.family_name ?? '';
+      this.checkoutService.findUserByUserId(this.email).subscribe((data)=>{
+        console.log(data);
+      })
 
-      let loginUser = new User(this.userName,this.lastName,"",this.email,"male");
+
+
+
     } else {
       // Handle the case where the user is not logged in or sessionStorage is empty
       console.error('No logged-in user found');
@@ -57,10 +62,22 @@ export class AccountComponent implements OnInit{
       this.checkoutService.findUserByUserId(this.email).subscribe(
         (data)=>{
           this.id= data;
+          console.log(this.id)
+          // @ts-ignore
+          this.checkoutService.findUserByRole(data).subscribe((data)=>{
+            console.log(data)
+            sessionStorage.setItem("Role",JSON.stringify(data[0]));
+          })
           if(data){
             this.checkoutService.findOrdersByUserId(this.id).subscribe(
-              (data)=>{
-                this.listOfOrders = data;
+              (data1)=>{
+                if(data1){
+                  this.listOfOrders = data1;
+
+
+
+                }
+
               }
 
             );

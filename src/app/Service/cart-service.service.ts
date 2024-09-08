@@ -133,44 +133,52 @@ export class CartServiceService  implements  OnInit{
 
   convertToListOfSelectedItems() {
     const user = sessionStorage.getItem("loggedInUser");
+    const role = sessionStorage.getItem("Role")
+
     if (user) {
-      let tempUser = JSON.parse(user);
-      this.userName = tempUser.given_name ?? '';
-      this.userProfileImage = tempUser.picture ?? '';
-      this.email = tempUser.email ?? '';
-      this.lastName = tempUser.family_name ?? '';
-      let createUser = new User(this.userName,this.lastName,"",this.email,"male");
-      console.log(createUser)
-      this.listOfProducts.map((data) => {
-        console.log(new SelectedItems(1,data.id, data.productName, data.imageUrl, data.type, data.price, data.quantity, data.description, data.categoryId,  this.email))
-        // @ts-ignore
-        this.selectedItems.push(new SelectedItems(1,data.id, data.productName, data.imageUrl, data.type, data.price, data.quantity, data.description, data.categoryId, this.email))
+      if(role){
+        let tempUser = JSON.parse(user);
+        this.userName = tempUser.given_name ?? '';
 
-      })
-      if (this.selectedItems && this.selectedItems.length > 0) {
-        this.selectedItems.find((data) => {
-          let formData = new FormData();
-          console.log(data);
-          this.selectedItemService.saveSelectedList(data).subscribe((data) => {
+        let user_role = JSON.parse(role);
+        this.userProfileImage = tempUser.picture ?? '';
+        this.email = tempUser.email ?? '';
+        this.lastName = tempUser.family_name ?? '';
+        let createUser = new User(this.userName,this.lastName,"",this.email,"male",user_role );
+        console.log(createUser)
+        this.listOfProducts.map((data) => {
+          console.log(new SelectedItems(1,data.id, data.productName, data.imageUrl, data.type, data.price, data.quantity, data.description, data.categoryId,  this.email))
+          // @ts-ignore
+          this.selectedItems.push(new SelectedItems(1,data.id, data.productName, data.imageUrl, data.type, data.price, data.quantity, data.description, data.categoryId, this.email))
 
-          })
-        });
+        })
+        if (this.selectedItems && this.selectedItems.length > 0) {
+          this.selectedItems.find((data) => {
+            let formData = new FormData();
+            console.log(data);
+            this.selectedItemService.saveSelectedList(data).subscribe((data) => {
+
+            })
+          });
+        }
       }
-
-
     }
   }
 
   fetchTheDataFromTheBackend(){
     const user = sessionStorage.getItem("loggedInUser");
+    const role = sessionStorage.getItem("Role")
     console.log(user)
     if (user) {
       let tempUser = JSON.parse(user);
+      // @ts-ignore
+      let userRole = JSON.parse(role);
       this.userName = tempUser.given_name ?? '';
       this.userProfileImage = tempUser.picture ?? '';
       this.email = tempUser.email ?? '';
       this.lastName = tempUser.family_name ?? '';
-      let createUser = new User(this.userName, this.lastName, "", this.email, "male");
+
+      let createUser = new User(this.userName, this.lastName, "", this.email, "male",userRole);
       this.selectedItemService.getSelectedList(createUser).subscribe((data)=>{
         this.getSelectedItems = data;
         this.convertSelectedItemsToProductList(this.getSelectedItems);

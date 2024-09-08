@@ -29,6 +29,9 @@ export class AuthServiceService {
     return this.httpClient.post<AuthenticationResponse>("http://localhost:8080/api/Users/user/registerByToken",idToken);
 
   }
+
+
+
 }
 
 interface AuthenticationResponse {

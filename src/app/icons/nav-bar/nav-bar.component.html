@@ -3,7 +3,7 @@
     <a href="/">My Store</a>
   </div>
   <ul class="navbar-nav">
-    <li *ngIf="isAuthenticated()" class="nav-item">
+    <li *ngIf="isAuthenticated() && role ==='ROLE_ADMIN'" class="nav-item">
       <a class="nav-link" routerLink="/addProduct">Add Products</a>
     </li>
     <li *ngIf="isAuthenticated()" class="nav-item">
@@ -12,14 +12,14 @@
     <li *ngIf="isAuthenticated()" class="nav-item">
       <a class="nav-link" routerLink="/orderedItems">Ordered Items</a>
     </li>
-    <li *ngIf="isAuthenticated()" class="nav-item">
+    <li *ngIf="isAuthenticated() " class="nav-item">
       <a class="nav-link" routerLink="/checkoutForm">Checkout Form</a>
     </li>
-    <li *ngIf="isAuthenticated()" class="nav-item">
+    <li *ngIf="isAuthenticated() && role ==='ROLE_ADMIN' " class="nav-item">
       <a class="nav-link" routerLink="/updateProduct">Update Product</a>
     </li>
 
-    <li *ngIf="isAuthenticated()" class="nav-item">
+    <li *ngIf="isAuthenticated() && role ==='ROLE_ADMIN'" class="nav-item">
       <a class="nav-link" routerLink="/viewBestCustomer">Best Customer</a>
     </li>
 

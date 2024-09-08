@@ -49,5 +49,9 @@ export class CheckoutService implements OnInit{
     return this.httpClient.get<Array<Orders>>(`http://localhost:8080/api/Cart/getOrdersBYUserId/${id}`);
   }
 
+  findUserByRole(id:number):Observable<Array<String>>{
+    return this.httpClient.get<Array<String>>(`http://localhost:8080/api/Users/getRoles/${id}`);
+  }
+
 
 }

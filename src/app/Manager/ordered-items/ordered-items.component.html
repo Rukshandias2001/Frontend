@@ -13,7 +13,7 @@
         <div class="product-controls">
           <button class="add-button" (click)="remove(item)">-</button>
           <span class="product-quantity">{{item.quantity}}</span>
-          <button class="add-button" (click)="removeItem(item.id)">-</button>
+          <button class="add-button" (click)="addItem(item)">+</button>
         </div>
         <button class="delete-button" (click)="confirmDeletingTheProduct(item.id)">remove</button>
 

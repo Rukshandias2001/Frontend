@@ -9,6 +9,7 @@ import {AuthServiceService} from "../../Service/auth-service.service";
 })
 export class NavBarComponent  implements OnInit{
   profilepic!:string;
+  role!:string;
 
   constructor(private authService:AuthServiceService){
 
@@ -23,17 +24,26 @@ export class NavBarComponent  implements OnInit{
   }
 
   signOut(){
+
     this.authService.signOut();
     localStorage.removeItem("listOfItems");
     sessionStorage.removeItem("loggedInUser");
     sessionStorage.clear();
+    window.location.reload();
   }
 
   fetchData(){
     const user = sessionStorage.getItem("loggedInUser");
+    let item = sessionStorage.getItem("Role");
+
     if(user){
       const loggedInUser = JSON.parse(user);
       this.profilepic = loggedInUser.picture ?? '';
+    }
+
+    if(item){
+     this.role= JSON.parse(item);
+      console.log(this.role)
     }
   }
 

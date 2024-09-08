@@ -1,26 +1,49 @@
 <div class="list-of-customers">
   <table>
 
-      <tr>
-        <th>
-          Id
-        </th>
-        <th>
-          Email
-        </th>
-        <th>
-          Price
-        </th>
-      </tr>
-      <tr *ngFor="let customer of listOfCustomers">
-        <td>{{customer.id}}</td>
-        <td>{{customer.email}}</td>
-        <td>{{customer.price}}</td>
-      </tr>
+    <tr>
+      <th>
+        Id
+      </th>
+      <th>
+        Email
+      </th>
+      <th>
+        Price
+      </th>
+    </tr>
+    <tr *ngFor="let customer of listOfCustomers">
+      <td>{{customer.id}}</td>
+      <td>{{customer.email}}</td>
+      <td>{{customer.price}}</td>
+    </tr>
   </table>
 
   <div class="chart">
     <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
   </div>
+
+  <div>
+    <canvasjs-chart [options]="chartOptions2" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
+  </div>
+
+  <div class="list-of-customers">
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>View Order</th>
+        <th>Email</th>
+      </tr>
+      <tr *ngFor="let order of listOfOrdersWithEmails">
+        <td>{{ order.orderId }}</td>
+        <td>
+          <button (click)="viewOrder(order.orderId)">View Order</button>
+        </td>
+        <td>{{ order.email }}</td>
+      </tr>
+    </table>
+
+  </div>
+
 
 </div>

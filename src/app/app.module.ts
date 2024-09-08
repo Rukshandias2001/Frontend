@@ -24,19 +24,21 @@ import { AccountComponent } from './Customer/account/account.component';
 import {AuthGuard} from "./guards/auth.guard";
 import { PaymentRecieptComponent } from './Manager/payment-reciept/payment-reciept.component';
 import { TopCustomerComponent } from './Manager/top-customer/top-customer.component';
+import { ViewRecieptComponent } from './Manager/view-reciept/view-reciept.component';
 
 const routes:Routes=[
-  {path:"addProduct", component:AddproductsComponent, canActivate:[AuthGuard]},
-  {path:"displayItems",   component:DisplayProductsComponent, canActivate:[AuthGuard]},
-  {path:"displayItem/:id",component:AditionalDetailsOfProductsComponent,canActivate:[AuthGuard]},
-  {path:"orderedItems",component:OrderedItemsComponent, canActivate:[AuthGuard]},
-  {path:"updateProduct",component:UpdateProductComponent,canActivate:[AuthGuard]},
-  {path:"updateForm/:id",component:UpdateFormComponent,canActivate:[AuthGuard]},
-  {path:"checkoutForm",component:CheckoutFormComponent, canActivate:[AuthGuard]},
-  {path:"account",component:AccountComponent,canActivate:[AuthGuard]},
-  {path:"receipt/:id",component:PaymentRecieptComponent,canActivate:[AuthGuard]},
-  {path:"viewBestCustomer",component:TopCustomerComponent,canActivate:[AuthGuard]},
-  {path:"", component:RegisterStatusComponent}
+  {path:"addProduct", component:AddproductsComponent, canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN']}} ,
+  {path:"displayItems",   component:DisplayProductsComponent, canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
+  {path:"displayItem/:id",component:AditionalDetailsOfProductsComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
+  {path:"orderedItems",component:OrderedItemsComponent, canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
+  {path:"updateProduct",component:UpdateProductComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN']}},
+  {path:"updateForm/:id",component:UpdateFormComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN']}},
+  {path:"checkoutForm",component:CheckoutFormComponent, canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
+  {path:"account",component:AccountComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
+  {path:"receipt/:id",component:PaymentRecieptComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
+  {path:"viewBestCustomer",component:TopCustomerComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN']}},
+  {path:"", component:RegisterStatusComponent,data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
+  {path:"viewReceipt/:id", component:ViewRecieptComponent,data:{roles:['ROLE_ADMIN',"ROLE_USER"]}}
 ]
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ const routes:Routes=[
     AccountComponent,
     PaymentRecieptComponent,
     TopCustomerComponent,
+    ViewRecieptComponent,
 
 
   ],
