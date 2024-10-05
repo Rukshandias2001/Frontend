@@ -5,9 +5,9 @@
   <h2>Shopping Cart</h2>
   <div class="sort-section">
     <label for="sortBy">Sort by:</label>
-    <select id="sortBy" [(ngModel)]="sortOption" (change)="sortProducts()">
+    <select id="sortBy" [(ngModel)]="sortOption" (change)="sortProducts($event)">
       <option value="price">Price</option>
-      <option value="price">Product Name</option>
+      <option value="productName">Product Name</option>
 
       <!-- Add other sorting options if needed -->
     </select>
@@ -40,8 +40,9 @@
   </div>
 
   <div class="discount-section">
-    <input type="text" placeholder="Discount code" [(ngModel)]="discountCode">
-    <button (click)="applyDiscount()">APPLY</button>
+    <button (click)="applyDiscount()">Price</button>
+    <input type="text" placeholder="Discount code" [(ngModel)]="price" disabled>
+
   </div>
 
   <div class="checkout-section">

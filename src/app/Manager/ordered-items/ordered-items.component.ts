@@ -28,6 +28,8 @@ export class OrderedItemsComponent implements OnInit{
   discountCode: any;
   ngOnInit(): void {
     this.fetchTheLoad()
+    this.calculateTotals();
+
   }
 
   fetchTheLoad(){
@@ -191,7 +193,27 @@ export class OrderedItemsComponent implements OnInit{
           })})
   }
 
-  sortProducts() {
+  sortProducts(event:Event) {
+    const selectElement = event.target as HTMLSelectElement;
+    console.log(selectElement.options.selectedIndex)
+    let number = selectElement.options.selectedIndex;
+    if(number===1){
+      this.selectItemService.sortByProducts("productName",this.tempUser).subscribe(
+        (data)=>{
+          this.selectedItems = data;
+        }
+      )
+
+    }else{
+      this.selectItemService.sortByProducts("price",this.tempUser).subscribe(
+        (data)=>{
+          this.selectedItems = data;
+        }
+      )
+    }
+
+
+
 
   }
 

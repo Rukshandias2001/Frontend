@@ -31,7 +31,12 @@ export class SelectedItemServiceService {
 
   addSeveralItemsByOnce(selectedItems:SelectedItems):Observable<SelectedItems>{
     return this.httpClient.post<SelectedItems>(`http://localhost:8080/api/Cart/addFavouritesByQuantity`,selectedItems)
+  }
 
+  sortByProducts(condition:string,user:User):Observable<SelectedItems[]>{
+    // @ts-ignore
+    const params = new HttpParams().set('name', user.username).set('email',user.email).set('condition',condition)
+    return this.httpClient.get<SelectedItems[]>(`http://localhost:8080/api/Cart/sortByProduct`,{params})
   }
 
 
