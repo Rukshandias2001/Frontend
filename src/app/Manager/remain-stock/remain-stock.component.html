@@ -1,0 +1,30 @@
+<div class="chart">
+  <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
+</div>
+<div class="empty-products">
+  <h1 class="heading">Emptied Stocks ! </h1>
+  <div *ngFor="let products of emptyProducts" class="mainDetail">
+    <img src="{{products.imageUrl}}" alt="Product Image" class="product-image">
+    <div class="details">
+      <div>
+        <p>Product Quantity : {{products.quantity}}</p>
+      </div>
+      <div>
+        <p>Product name : {{products.productName}}</p>
+      </div>
+      <div>
+        <p>id :{{products.id}}</p>
+      </div>
+      <div class="update-button">
+        <button (click)="updatePage(products.id)">update</button>
+      </div>
+
+
+    </div>
+
+  </div>
+  <div *ngIf="emptyProducts.length==0">
+    <h1 class="heading">No available empty stocks ! </h1>
+
+  </div>
+</div>
