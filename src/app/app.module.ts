@@ -25,6 +25,8 @@ import {AuthGuard} from "./guards/auth.guard";
 import { PaymentRecieptComponent } from './Manager/payment-reciept/payment-reciept.component';
 import { TopCustomerComponent } from './Manager/top-customer/top-customer.component';
 import { ViewRecieptComponent } from './Manager/view-reciept/view-reciept.component';
+import { RemainStockComponent } from './Manager/remain-stock/remain-stock.component';
+import { FooterComponent } from './icons/footer/footer.component';
 
 const routes:Routes=[
   {path:"addProduct", component:AddproductsComponent, canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN']}} ,
@@ -38,7 +40,8 @@ const routes:Routes=[
   {path:"receipt/:id",component:PaymentRecieptComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
   {path:"viewBestCustomer",component:TopCustomerComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN']}},
   {path:"", component:RegisterStatusComponent,data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
-  {path:"viewReceipt/:id", component:ViewRecieptComponent,data:{roles:['ROLE_ADMIN',"ROLE_USER"]}}
+  {path:"viewReceipt/:id", component:ViewRecieptComponent,data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
+  {path:"stock", component:RemainStockComponent,data:{roles:['ROLE_ADMIN',"ROLE_USER"]}}
 ]
 @NgModule({
   declarations: [
@@ -58,6 +61,8 @@ const routes:Routes=[
     PaymentRecieptComponent,
     TopCustomerComponent,
     ViewRecieptComponent,
+    RemainStockComponent,
+    FooterComponent,
 
 
   ],
@@ -75,4 +80,6 @@ const routes:Routes=[
   providers: [provideToastr()],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

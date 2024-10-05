@@ -1,32 +1,118 @@
 <div class="body">
-  <div class="cart-container">
-    <a routerLink="/orderedItems">
-      <img src="../../../assets/cart.png" alt="Cart Icon" class="cart-icon" />
-      <p class="item-count">{{numberOfItems}}</p>
-    </a>
+<!--  <div class="cart-container">-->
+<!--    <a routerLink="/orderedItems">-->
+<!--      <img src="../../../assets/cart.png" alt="Cart Icon" class="cart-icon" />-->
+<!--      <p class="item-count">{{numberOfItems}}</p>-->
+<!--    </a>-->
+<!--  </div>-->
+  <div class="body">
+    <div class="search-bar">
+      <form (ngSubmit)="searchProduct(0)">
+        <div class="form-group search-input">
+          <input type="text" id="productName1" name="productName" placeholder="Type Keywords" [(ngModel)]="productName" />
 
-  </div>
+        </div>
 
+        <div class="advanced-search">
+          <h3>Advanced Search</h3>
 
-  <div class="categories">
-    <button class="category-button" (click)="showRelevantItem('All')">All</button>
-    <button class="category-button" (click)="showRelevantItem('Electronics')">Electronics</button>
-    <button class="category-button" (click)="showRelevantItem('Clothings')">Clothing</button>
-  </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="type">Type</label>
+              <select id="type" name="type" [(ngModel)]="selectedType">
+                <option *ngFor="let item of listOfArray" [value]="item">
+                  {{item}}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="productId">ID</label>
+              <input type="text" id="productId" name="productId" [(ngModel)]="productId">
+            </div>
+
+            <div class="form-group">
+              <label for="productName">productName</label>
+              <input type="text" id="productName" name="productName" placeholder="Type Keywords" [(ngModel)]="productName" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="priceRangeFrom">Price From</label>
+              <input type="text" id="priceRangeFrom" name="priceRangeFrom" [(ngModel)]="priceRangeFrom">
+
+            </div>
+
+            <div class="form-group">
+              <label for="priceRangeTo">Price To</label>
+              <input type="text" id="priceRangeTo" name="priceRangeTo" [(ngModel)]="priceRangeTo">
+            </div>
+
+            <div class="form-group">
+              <label for="productQuantity">Quantity</label>
+              <input type="text" id="productQuantity" name="productQuantity" [(ngModel)]=" productQuantity" [defaultValue]="-1">
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <span class="results">{{totalEelements}} results</span>
+            <button type="reset" class="reset-button">Reset</button>
+            <button type="submit" class="search-button">Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
 
   <div class="product-container">
     <div *ngFor="let item of listOfProducts" class="product-card">
-      <img src="{{item.imageUrl}}" alt="Product Image" class="product-image">
+      <img src="{{item.imageUrl}}" alt="Product Image" class="product-image" />
       <div class="product-info">
         <h2 class="product-title">{{item.productName}}</h2>
         <p class="product-description">{{item.description}}</p>
         <div class="product-details">
           <span class="product-quantity">Quantity: {{item.quantity}}</span>
-          <span class="product-price">{{item.price}} Rs</span>
+          <span class="product-price">{{item.price}} $</span>
         </div>
-        <button class="add-button" (click)=" confirmAddingToCart(item)">Add</button>
-        <button class="add-button" (click)="displayDetailsOfProduct(item.id)">View</button>
+
+
+
+        <div class="pricing">
+          <span class="product-new-price">{{item.price}}$</span>
+          <span class="strike-text">{{item.price}}$</span>
+          <span class="shipping">Free shipping</span>
+        </div>
+
+        <div *ngIf="item.quantity > 0 else outOfStock" class="buttons">
+          <button class="add-button" (click)="confirmAddingToCart(item)">Add</button>
+          <button class="add-button" (click)="displayDetailsOfProduct(item.id)">View</button>
+        </div>
+
+        <ng-template #outOfStock>
+          <p class="out-of-stock-message" style="color: red">Out of Stock</p>
+        </ng-template>
       </div>
     </div>
   </div>
+    <div class="pagination2 justify-content-end">
+      <nav aria-label="Page navigation example ">
+        <ul class="pagination " >
+          <li class="page-item ">
+            <a class="page-link" aria-label="Previous" (click)="getAllProducts(0,4)">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <li class="page-item" *ngFor="let item of [].constructor(pages); let i=index"><a class="page-link" (click)="getAllProducts(i,4)" >{{i}}</a></li>
+
+          <li class="page-item">
+            <a class="page-link" (click)="getAllProducts(pages-1,4)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
 </div>

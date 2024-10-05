@@ -30,6 +30,7 @@ export class UpdateFormComponent implements OnInit{
   selectedFile: File | null = null;
 
   display:boolean = false;
+  totalEelements:number=0;
 
 
   constructor(private route:ActivatedRoute,private productService:ProductServiceService,private toastr: ToastrService) {
@@ -150,6 +151,7 @@ export class UpdateFormComponent implements OnInit{
   }
 
 
+
   protected readonly onsubmit = onsubmit;
 
   confirmAddingTheProduct(){
@@ -174,4 +176,6 @@ export class UpdateFormComponent implements OnInit{
       }
     })
   }
+
+
 }

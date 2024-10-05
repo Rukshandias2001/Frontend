@@ -40,5 +40,19 @@ export class BestCustomerService {
     return this.httpclient.get("http://localhost:8080/api/Cart/getOrderById/"+orderId)
   }
 
+  fetchMonthlyIncomeOfElectronicAndClothing():Observable<{[key:string]:number}>{
+    // @ts-ignore
+    return this.httpclient.get("http://localhost:8080/api/manager/getTotalPriceMonthly")
+  }
+
+  fetchMonthlyIncomeOfElectronics():Observable<{[key:string]:number}>{
+    // @ts-ignore
+    return this.httpclient.get("http://localhost:8080/api/manager/getTotalPriceMontlyForElectronics")
+  }
+
+  fetchMonthlyIncomeOfClothing():Observable<{[key:string]:number}>{
+    // @ts-ignore
+    return this.httpclient.get("http://localhost:8080/api/manager/getTotalPriceMonthlyForClothing")
+  }
 
 }

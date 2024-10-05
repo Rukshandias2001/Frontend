@@ -8,6 +8,9 @@ import {SelectedItems} from "../../Classes/selected-items";
 import {OrderService} from "../../Service/order.service";
 import {User} from "../../Classes/user";
 import Swal from "sweetalert2";
+import {SearchPayload} from "../../Classes/search-payload";
+import {SearchServiceService} from "../../Service/search-service.service";
+import swal from "sweetalert2";
 
 @Component({
   selector: 'app-display-products',
@@ -17,13 +20,26 @@ import Swal from "sweetalert2";
 export class DisplayProductsComponent implements OnInit{
     listOfProducts!:Array<Product>;
     products!:Product
+    productId!:number;
+    priceRangeFrom!:number;
+    priceRangeTo!:number;
+    searchPayload!:SearchPayload;
+    productName!:string;
+    quantity!:number;
+    productQuantity:number =-1;
+  listOfArray:Array<String>=[];
+  selectedType!:string;
 
-   numberOfItems: number=0;
+
+    numberOfItems: number=0;
     email!:string;
     tempUser!:User;
+    pages:number =0;
+    totalEelements:number=0;
 
-    constructor(private productService:ProductServiceService,private router:Router,private cartService:CartServiceService,private selectedItemService:SelectedItemServiceService,private orderItemsService:OrderService) {
+    constructor(private productService:ProductServiceService,private router:Router,private cartService:CartServiceService,private selectedItemService:SelectedItemServiceService,private orderItemsService:OrderService,private searchService:SearchServiceService) {
       const loggedInUser = sessionStorage.getItem('loggedInUser');
+
 
       if (loggedInUser) {
         const user = JSON.parse(loggedInUser);
@@ -36,23 +52,18 @@ export class DisplayProductsComponent implements OnInit{
     }
 
     ngOnInit(): void {
-      this.displayShoppingCart();
+
       this.cartService.totalQuantity.subscribe(
         (data)=>{
           this.numberOfItems =  data;
         }
       );
+      this.listOfArray = ['Electronics','Clothings','All']
       this.calculateTotals();
+      this.getAllProducts(0,3);
     }
 
-    displayShoppingCart(){
-        this.productService.getProductsByProducts().subscribe(
-          (data) => {
-            this.listOfProducts = data
 
-          }
-        )
-    }
 
 
   showRelevantItem(category: string) {
@@ -100,7 +111,65 @@ export class DisplayProductsComponent implements OnInit{
     });
   }
 
+  validation() {
+    this.searchPayload = new SearchPayload();
+
+    if(this.productId!=null){
+      this.searchPayload.productId=this.productId;
+
+    }
+    if(this.priceRangeFrom!=null){
+      this.searchPayload.searchFrom = this.priceRangeFrom;
+    }
+    if(this.priceRangeTo!=null){
+      this.searchPayload.searchTo = this.priceRangeTo;
+    }
+    if(this.productName!=null){
+      this.searchPayload.nameOfProduct = this.productName;
+    }
+    if(this.selectedType != null && this.selectedType !== 'All'){
+      console.log(this.selectedType)
+      this.searchPayload.selectedType = this.selectedType;
+    }
+    if(this.quantity!=null){
+      this.searchPayload.quantity = this.quantity;
+    }
+    if(this.productQuantity!=null){
+      this.searchPayload.quantity = this.productQuantity;
+    }
+
+  }
 
 
+  searchProduct(page:number){
+    this.validation();
+    console.log(this.searchPayload)
+    this.searchService.searchLoad(this.searchPayload,page,4).subscribe(
+      (data)=>{
+        this.listOfProducts = data;
+      }
+    );
+  }
 
+  getAllProducts(page:number,size:number){
+    this.productService.getAllProducts(page,4).subscribe(
+      (data)=>{
+       this.listOfProducts = data;
+      }
+    )
+    this.productService.getPageNumber(0,4).subscribe(
+      (data)=>{
+        this.pages =data.totalPages;
+        this.totalEelements = data.totalElements
+      }
+    )
+  }
+  private showInvalidMessage(tittle:string) {
+    swal.fire({
+      title: 'Failed!',
+      text: tittle,
+      icon: 'warning',
+      confirmButtonText: 'OK'
+    });
+  }
 }

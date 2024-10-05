@@ -19,13 +19,15 @@ export class AccountComponent implements OnInit{
     lastName: string = '';
     id!:number;
     listOfOrders!:Array<Orders>;
+    pages:number =0;
+    totalEelements:number=0;
 
     constructor(private authService:AuthServiceService,private checkoutService:CheckoutService,private router:Router) {
     }
 
     ngOnInit(): void {
       this.fetchData();
-      this.fetchOrders();
+      this.fetchOrders(0,20);
 
     }
 
@@ -58,7 +60,7 @@ export class AccountComponent implements OnInit{
 
     }
 
-    fetchOrders(){
+    fetchOrders(page:number,size:number){
       this.checkoutService.findUserByUserId(this.email).subscribe(
         (data)=>{
           this.id= data;
@@ -69,18 +71,23 @@ export class AccountComponent implements OnInit{
             sessionStorage.setItem("Role",JSON.stringify(data[0]));
           })
           if(data){
-            this.checkoutService.findOrdersByUserId(this.id).subscribe(
+            this.checkoutService.findOrdersByUserId(this.id,page,size).subscribe(
               (data1)=>{
                 if(data1){
                   this.listOfOrders = data1;
-
-
 
                 }
 
               }
 
             );
+            this.checkoutService.findOrdersByUserIdGetNumber(this.id,page,size).subscribe(
+              (data)=>{
+                this.pages =data.totalPages;
+
+              }
+
+            )
           }
         }
       )

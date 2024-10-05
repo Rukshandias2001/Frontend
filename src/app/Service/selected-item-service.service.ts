@@ -29,6 +29,11 @@ export class SelectedItemServiceService {
     return this.httpClient.delete<SelectedItems>(`http://localhost:8080/api/Cart/deleteSelectedList/${id}`)
   }
 
+  addSeveralItemsByOnce(selectedItems:SelectedItems):Observable<SelectedItems>{
+    return this.httpClient.post<SelectedItems>(`http://localhost:8080/api/Cart/addFavouritesByQuantity`,selectedItems)
+
+  }
+
 
 
 

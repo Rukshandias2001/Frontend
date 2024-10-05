@@ -1,133 +1,251 @@
-.body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-
+body {
+  background: #eee;
 }
-.cart-container {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  top: 800px;
-  left: 1800px;
 
+.cart-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .cart-icon {
-  width: 100%;
-  height: 100%;
+  width: 40px;
 }
 
 .item-count {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 5px;
-  font-size: 12px;
-  line-height: 1;
-  min-width: 20px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.cart-icon {
-  display: block;
-  margin: 0 auto;
-  width: 50px;
-  height: auto;
+  font-size: 14px;
+  color: red;
 }
 
 .categories {
-  text-align: center;
-  margin-bottom: 20px;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 .category-button {
+  margin: 5px;
+  padding: 10px;
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 10px 20px;
-  margin: 5px;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.category-button:hover {
-  background-color: #0056b3;
 }
 
 .product-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  width: 1000px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
   justify-content: center;
-  transform: translateX(400px);
+  position: relative;
+  top: 100px;
+
+
 }
 
 .product-card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-}
-
-.product-card:hover {
-  transform: scale(1.05);
+  display: flex;
+  width: 1000px;
+  height: 300px;
+  background-color: white;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  left: 400px;
+  gap: 40px;
 }
 
 .product-image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+  width: 200px;
+  height: auto;
+
 }
 
 .product-info {
-  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .product-title {
   font-size: 18px;
-  margin: 10px 0;
+  font-weight: bold;
 }
 
 .product-description {
   font-size: 14px;
-  color: #666;
+  color: #555;
 }
 
 .product-details {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  margin-bottom: 10px;
 }
 
-.product-quantity,
-.product-price {
-  font-size: 14px;
-  font-weight: bold;
+.pricing {
+  display: flex;
+  align-items: center;
+}
+
+.product-new-price {
+  font-size: 18px;
+  color: green;
+  margin-right: 10px;
+}
+
+.strike-text {
+  color: red;
+  text-decoration: line-through;
+}
+
+.shipping {
+  color: #28a745;
+  margin-left: 10px;
+}
+
+.ratings i {
+  font-size: 16px;
+  color: red;
 }
 
 .add-button {
-  background-color: #28a745;
+  background-color: #007bff;
   color: white;
-  border: none;
   padding: 10px;
-  margin: 5px 0;
+  border: none;
   cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  width: 100%;
+  margin-right: 10px;
+}
+.buttons{
+  position: relative;
+  display: flex;
+  left: 600px;
 }
 
-.add-button:hover {
-  background-color: #218838;
+.out-of-stock-message {
+  color: red;
+  font-weight: bold;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.search-bar {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  width: 1000px;
+  transform: translate(400px,80px);
+
+
+}
+
+.search-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+}
+
+.search-input .search-button {
+  padding: 10px;
+  background-color: #ff5722;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  color: #fff;
+}
+
+.search-input .search-button i {
+  font-size: 18px;
+}
+
+.advanced-search {
+  background: #000;
+  padding: 20px;
+  border-radius: 8px;
+
+}
+
+.advanced-search h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-group {
+  flex-basis: 30%;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+.form-group select,
+.form-group input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #333;
+  background: #222;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.results {
+  color: #ff5722;
+  font-size: 16px;
+}
+
+.reset-button,
+.search-button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #ff5722;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.reset-button {
+  background-color: #333;
+  transform: translateX(330px);
+}
+
+body {
+  background: #eee;
+}
+.pagination2{
+  position: relative;
+  display: flex;
+  right: 100px;
+  top: 100px;
+  padding-bottom: 100px;
 }

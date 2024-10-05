@@ -1,0 +1,17 @@
+
+/* Make sure there are no extra margins or paddings around the body */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%; /* Ensures body and html also take full width */
+  box-sizing: border-box; /* Avoids padding or border from affecting the width */
+}
+
+/* Ensure the navbar spans the entire width */
+.navbar {
+  width: 100%;
+  display: flex; /* Ensures the elements inside are aligned horizontally */
+  justify-content: space-between; /* Distributes space between items evenly */
+  background-color: #333; /* Example background color */
+  padding: 10px 20px; /* Adjust padding as needed */
+}

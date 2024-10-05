@@ -23,9 +23,21 @@ export class OrderedItemsComponent implements OnInit{
   tempUser!:User;
   price:number =0;
   quantity:number =0;
+  listOfProducts!:Array<Product>;
+  sortOption: any;
+  discountCode: any;
   ngOnInit(): void {
+    this.fetchTheLoad()
   }
-  constructor(private selectItemService:SelectedItemServiceService,private router:Router,public orderService:OrderService) {
+
+  fetchTheLoad(){
+    this.productService.getProductsByProducts().subscribe(
+      (data)=>{
+        this.listOfProducts = data;
+      }
+    )
+  }
+  constructor(private selectItemService:SelectedItemServiceService,private router:Router,public orderService:OrderService,public productService:ProductServiceService) {
     const loggedInUser = sessionStorage.getItem('loggedInUser');
 
 
@@ -65,6 +77,8 @@ export class OrderedItemsComponent implements OnInit{
 
         }
       )
+
+
   }
 
   checkoutForm() {
@@ -75,6 +89,7 @@ export class OrderedItemsComponent implements OnInit{
   remove(item: SelectedItems) {
     item.quantity--;
     let tempItem = new SelectedItems(item.id,item.productId,item.productName,item.imageUrl,item.type,item.price,-1,item.description,item.categoryId,item.email);
+
     if(item.quantity>0){
       this.selectItemService.saveSelectedList(tempItem).subscribe(
         (data)=>{
@@ -93,7 +108,15 @@ export class OrderedItemsComponent implements OnInit{
   addItem(item: SelectedItems){
     item.quantity++;
     let tempItem = new SelectedItems(item.id,item.productId,item.productName,item.imageUrl,item.type,item.price,1,item.description,item.categoryId,item.email);
-
+    this.fetchTheLoad();
+     let product = this.listOfProducts.find((data)=>{
+       return data.imageUrl === item.imageUrl
+     })
+    // @ts-ignore
+    console.log(product?.quantity>item.quantity)
+    console.log(product?.quantity)
+    // @ts-ignore
+    if(product?.quantity>=item.quantity){
       this.selectItemService.saveSelectedList(tempItem).subscribe(
         (data)=>{
           if(data){
@@ -102,6 +125,27 @@ export class OrderedItemsComponent implements OnInit{
           }
         }
       )
+
+    }else{
+      swal.fire({
+        title: 'Count exceeded !',
+        text: 'Cannot add more product You have reached the count',
+        icon: 'warning',
+
+        confirmButtonColor: '#3085d6',
+
+        confirmButtonText: 'OK'
+
+
+
+      }).then((confirm)=>{
+        if(confirm.isConfirmed){
+          window.location.reload();
+        }
+      })
+
+    }
+
 
   }
 
@@ -147,4 +191,11 @@ export class OrderedItemsComponent implements OnInit{
           })})
   }
 
+  sortProducts() {
+
+  }
+
+  applyDiscount() {
+
+  }
 }

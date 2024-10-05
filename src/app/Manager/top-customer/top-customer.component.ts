@@ -3,11 +3,12 @@ import {BestCustomerService} from "../../Service/best-customer.service";
 import {CustomerDtoRequest} from "../../Classes/customer-dto-request";
 import {DashboardDTORequest} from "../../Classes/dashboard-dtorequest";
 
-import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import {CanvasJS, CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import {PieChartDTO} from "../../Classes/pie-chart-dto";
 import {Orders} from "../../Classes/orders";
 import {Router} from "@angular/router";
 import {catchError, forkJoin, map, of} from "rxjs";
+import {keyframes} from "@angular/animations";
 
 @Component({
   selector: 'app-top-customer',
@@ -21,6 +22,13 @@ export class TopCustomerComponent implements OnInit{
   listOfOrders!:Array<Orders>;
   email!:String;
 
+  // @ts-ignore
+  monthlyIncome!: Map<{[key:string]:number}> = new Map();
+  // @ts-ignore
+  monthlyClothingIncome!: Map<{[key:string]:number}> = new Map();
+
+  // @ts-ignore
+  monthlyElectronicsIncome!: Map<{[key:string]:number}> = new Map();
 
 
 
@@ -55,9 +63,11 @@ export class TopCustomerComponent implements OnInit{
     }]
   }
 
+
+
   chartOptions2: any = {};
   listOfOrdersWithEmails: Array<{ orderId: number, email: string }> = [];
-
+  chartOptions3:any ={};
 
 
 
@@ -70,6 +80,7 @@ export class TopCustomerComponent implements OnInit{
   ngOnInit() {
       this.fetchData();
       this.fetchListOfOrders();
+      this.displayLineChart();
   }
 
   fetchData(){
@@ -93,6 +104,90 @@ export class TopCustomerComponent implements OnInit{
       }
 
     )
+  }
+
+  displayLineChart(){
+    let dataPoints1: { label: string, y: number }[] = [];
+    let dataPoints2: { label: string, y: number }[] = [];
+    let dataPoints3: { label: string, y: number }[] = [];
+    this.bestCustomerService.fetchMonthlyIncomeOfElectronicAndClothing().subscribe((data)=>{
+      this.monthlyIncome = data;
+      console.log(data);
+      // If the data is an object, iterate using Object.entries()
+      Object.entries(this.monthlyIncome).forEach(([key, value]) => {
+        // Here key is the month, and value is the income
+        dataPoints1.push({ label: key, y: Number(value) });
+      });
+
+      console.log(dataPoints1);
+    })
+    this.bestCustomerService.fetchMonthlyIncomeOfClothing().subscribe((data)=>{
+      this.monthlyClothingIncome = data;
+      Object.entries(this.monthlyClothingIncome).forEach(([key, value])=>{
+        dataPoints2.push({label:key,y:Number(value)})
+      })
+    })
+
+    this.bestCustomerService.fetchMonthlyIncomeOfElectronics().subscribe((data)=>{
+      this.monthlyElectronicsIncome = data;
+      Object.entries(this.monthlyElectronicsIncome).forEach(([key, value])=>{
+        dataPoints3.push({label:key,y:Number(value)})
+      })
+    })
+
+
+
+
+    this.chartOptions3 = {
+      animationEnabled: true,
+      title: {
+        text: "Monthly Income"
+      },
+      axisX: {
+        title: "Months"
+      },
+      axisY: {
+        title: "Income (USD)"
+      },
+      toolTip: {
+        shared: true
+      },
+      legend: {
+        cursor: "pointer",
+        itemclick: function (e: any) {
+          if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+            e.dataSeries.visible = false;
+          } else {
+            e.dataSeries.visible = true;
+          }
+          e.chart.render();
+        }
+      },
+      data: [{
+        type: "spline",
+        showInLegend: true,
+        name: "Income",
+        dataPoints: dataPoints1  // Use the generated dataPoints1 here
+      },
+        {
+          type: "spline",
+          showInLegend: true,
+          name: "Clothing",
+          dataPoints: dataPoints2  // Just using dataPoints1 for Los Angeles as well
+        },
+        {
+          type: "spline",
+          showInLegend: true,
+          name: "Electronic",
+          dataPoints: dataPoints3  // Just using dataPoints1 for Seattle as well
+        }]
+    };
+
+    // Render the chart
+    // Assuming you are using CanvasJS or any other charting library
+    let chart = new CanvasJS.Chart("chartContainer", this.chartOptions3);
+    chart.render();
+
   }
 
 

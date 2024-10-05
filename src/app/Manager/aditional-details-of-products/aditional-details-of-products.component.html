@@ -1,12 +1,27 @@
-<!-- component.html -->
-
+<div class="product-page">
   <div class="product-container">
-    <img src="{{product.imageUrl}}" alt="" class="product-image">
-    <h1 class="product-name">Name of Product: {{product.productName}}</h1>
-    <p class="product-description">Description: {{product.description}}</p>
-    <p class="product-unique-item">Quantity :{{product.quantity}}</p>
-    <p class="product-price">Price: {{product.price}}$</p>
-    <p class="product-unique-item">  {{uniqueItem2}}</p>
-    <p class="product-unique-item"> {{uniqueItem1}}</p>
+    <div class="product-image-section">
+      <img src="{{product.imageUrl}}" alt="Product Image" class="product-image" />
+    </div>
+    <div class="product-details">
+      <h1 class="product-name">Name of Product: {{product.productName}}</h1>
+      <p class="product-description">Description: {{product.description}}</p>
+      <p class="product-unique-item">Quantity: {{product.quantity}}</p>
+      <p class="product-price">Price: {{product.price}}$</p>
+      <div class="unique-items">
+        <p class="product-unique-item">{{uniqueItem1}}</p>
+        <p class="product-unique-item">{{uniqueItem2}}</p>
+      </div>
+      <div class="product-actions">
+        <label>Qty:</label>
+        <select class="quantity-input" [(ngModel)]="quantity">
+          <option selected disabled>Select</option>
+          <option *ngFor="let item of [].constructor(product.quantity); let i = index" [ngValue]="i + 1" id="{{i}}">
+            {{ i + 1 }}
+          </option>
+        </select>
+        <button class="add-to-cart-btn" (click)="addToCart(product.id,product)">Add to Cart</button>
+      </div>
+    </div>
   </div>
-
+</div>

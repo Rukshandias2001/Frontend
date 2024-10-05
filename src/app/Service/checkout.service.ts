@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient,HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {Country} from "../Classes/country";
 import {State} from "../Classes/state";
 import {Orders} from "../Classes/orders";
@@ -45,8 +45,14 @@ export class CheckoutService implements OnInit{
     return this.httpClient.post<number>("http://localhost:8080/api/Users/findByEmail",email,{ headers });
   }
 
-  findOrdersByUserId(id:number):Observable<Array<Orders>>{
-    return this.httpClient.get<Array<Orders>>(`http://localhost:8080/api/Cart/getOrdersBYUserId/${id}`);
+  findOrdersByUserId(id:number,page: number, size: number):Observable<Array<Orders>>{
+    return this.httpClient.get<any>(`http://localhost:8080/api/Cart/getOrdersBYUserId/${id}?pageNumber=${page}&size=${size}`).pipe(
+      map(response => response.content) // Extract the 'content' part of the Page<Product>
+    );
+  }
+
+  findOrdersByUserIdGetNumber(id:number,page: number, size: number):Observable<any>{
+    return this.httpClient.get<any>(`http://localhost:8080/api/Cart/getOrdersBYUserId/${id}?pageNumber=${page}&size=${size}`)
   }
 
   findUserByRole(id:number):Observable<Array<String>>{
