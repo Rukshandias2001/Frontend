@@ -24,6 +24,7 @@
           <a class="nav-link active" (click)="signOut()">Sign Out</a>
         </li>
 
+
         <!-- Admin Privileges -->
         <li class="nav-item dropdown" *ngIf="isAuthenticated() && role === 'ROLE_ADMIN'">
           <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -33,6 +34,7 @@
             <li><a class="dropdown-item" routerLink="/viewBestCustomer">Best Customer</a></li>
             <li><a class="dropdown-item" routerLink="/stock">Available Stock</a></li>
             <li><a class="dropdown-item" routerLink="/updateProduct">Update Product</a></li>
+            <li><a class="dropdown-item" routerLink="/addProduct">Add Product</a></li>
           </ul>
         </li>
       </ul>

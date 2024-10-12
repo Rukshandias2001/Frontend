@@ -34,7 +34,7 @@ export class UpdateProductComponent implements  OnInit{
   }
 
   ngOnInit(): void {
-    this.getAllProducts(0,6);
+    this.searchProduct(0);
 
     this.listOfArray = ['Electronics','Clothings','All']
   }
@@ -56,7 +56,14 @@ export class UpdateProductComponent implements  OnInit{
     console.log(this.searchPayload)
     this.searchService.searchLoad(this.searchPayload,page,6).subscribe(
       (data)=>{
-        this.listOfProducts = data;
+
+        // @ts-ignore
+        this.listOfProducts = data.content;
+        // @ts-ignore
+        this.pages =data.totalPages;
+        // @ts-ignore
+        this.totalEelements = data.totalElements
+
       }
     );
   }
@@ -90,12 +97,12 @@ export class UpdateProductComponent implements  OnInit{
   }
 
   getAllProducts(page:number,size:number){
-    this.productService.getAllProducts(page,6).subscribe(
+    this.productService.getAllProducts(page,4).subscribe(
       (data)=>{
         this.listOfProducts = data;
       }
     )
-    this.productService.getPageNumber(0,6).subscribe(
+    this.productService.getPageNumber(0,4).subscribe(
       (data)=>{
         this.pages =data.totalPages;
       }

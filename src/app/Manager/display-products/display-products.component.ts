@@ -37,6 +37,7 @@ export class DisplayProductsComponent implements OnInit{
     pages:number =0;
     totalEelements:number=0;
 
+
     constructor(private productService:ProductServiceService,private router:Router,private cartService:CartServiceService,private selectedItemService:SelectedItemServiceService,private orderItemsService:OrderService,private searchService:SearchServiceService) {
       const loggedInUser = sessionStorage.getItem('loggedInUser');
 
@@ -60,7 +61,8 @@ export class DisplayProductsComponent implements OnInit{
       );
       this.listOfArray = ['Electronics','Clothings','All']
       this.calculateTotals();
-      this.getAllProducts(0,3);
+      // this.getAllProducts(0,3);
+      this.searchProduct(0);
     }
 
 
@@ -141,29 +143,24 @@ export class DisplayProductsComponent implements OnInit{
   }
 
 
+
   searchProduct(page:number){
     this.validation();
+    console.log(page)
     console.log(this.searchPayload)
     this.searchService.searchLoad(this.searchPayload,page,4).subscribe(
       (data)=>{
-        this.listOfProducts = data;
+        console.log(data)
+        // @ts-ignore
+        this.listOfProducts = data.content;
+        // @ts-ignore
+        this.pages =data.totalPages;
+        // @ts-ignore
+        this.totalEelements = data.totalElements
       }
     );
   }
 
-  getAllProducts(page:number,size:number){
-    this.productService.getAllProducts(page,4).subscribe(
-      (data)=>{
-       this.listOfProducts = data;
-      }
-    )
-    this.productService.getPageNumber(0,4).subscribe(
-      (data)=>{
-        this.pages =data.totalPages;
-        this.totalEelements = data.totalElements
-      }
-    )
-  }
   private showInvalidMessage(tittle:string) {
     swal.fire({
       title: 'Failed!',

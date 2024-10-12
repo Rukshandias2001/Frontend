@@ -33,7 +33,14 @@ export class SearchServiceService {
     if(searchPayload.productId){
       params = params.set('productId', searchPayload.productId);
     }
-   
+    if(pageNumber>-1){
+      console.log(pageNumber)
+      params = params.set('pageNumber',pageNumber);
+    }
+    if(size){
+      params = params.set("size",size)
+    }
+
 
     return this.httpClient.get<Product[]>("http://localhost:8080/api/searchPayLoad/searchResult",{params})
   }
