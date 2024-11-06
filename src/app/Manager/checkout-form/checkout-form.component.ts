@@ -177,7 +177,8 @@ export class CheckoutFormComponent implements  OnInit{
         product[i].imageUrl,
         product[i].description,
         product[i].categoryId,
-        product[i].type
+        product[i].type,
+        "pending"
       ));
     }
 

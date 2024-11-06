@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {AuthServiceService} from "../../Service/auth-service.service";
 
 // @ts-ignore
@@ -10,6 +10,7 @@ import {AuthServiceService} from "../../Service/auth-service.service";
 export class NavBarComponent  implements OnInit{
   profilepic!:string;
   role!:string;
+  isDropDown: boolean  = false
 
   constructor(private authService:AuthServiceService){
 
@@ -17,6 +18,10 @@ export class NavBarComponent  implements OnInit{
 
   ngOnInit(): void {
     this.fetchData();
+  }
+
+  ifClicked(){
+    this.isDropDown = !this.isDropDown
   }
 
   isAuthenticated(){
@@ -47,6 +52,17 @@ export class NavBarComponent  implements OnInit{
     }
   }
 
+  closeDropdown() {
+    this.isDropDown = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const clickedInside = (event.target as HTMLElement).closest('.nav-item.dropdown');
+    if (!clickedInside) {
+      this.closeDropdown();
+    }
+  }
 
 
 }

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
@@ -27,6 +27,13 @@ import { TopCustomerComponent } from './Manager/top-customer/top-customer.compon
 import { ViewRecieptComponent } from './Manager/view-reciept/view-reciept.component';
 import { RemainStockComponent } from './Manager/remain-stock/remain-stock.component';
 import { FooterComponent } from './icons/footer/footer.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { ValidatePaymentComponent } from './Manager/validate-payment/validate-payment.component';
+import { CheckRecieptComponent } from './Manager/check-reciept/check-reciept.component';
+
+
 
 const routes:Routes=[
   {path:"addProduct", component:AddproductsComponent, canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN']}} ,
@@ -41,7 +48,9 @@ const routes:Routes=[
   {path:"viewBestCustomer",component:TopCustomerComponent,canActivate:[AuthGuard],data:{roles:['ROLE_ADMIN']}},
   {path:"", component:RegisterStatusComponent,data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
   {path:"viewReceipt/:id", component:ViewRecieptComponent,data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
-  {path:"stock", component:RemainStockComponent,data:{roles:['ROLE_ADMIN',"ROLE_USER"]}}
+  {path:"stock", component:RemainStockComponent,data:{roles:['ROLE_ADMIN',"ROLE_USER"]}},
+  {path:"validate",component:ValidatePaymentComponent, data :{roles:['ROLE_ADMIN']}},
+  {path:"confirmPayment/:id",component:CheckRecieptComponent, data :{roles:['ROLE_ADMIN']}}
 ]
 @NgModule({
   declarations: [
@@ -63,6 +72,9 @@ const routes:Routes=[
     ViewRecieptComponent,
     RemainStockComponent,
     FooterComponent,
+    ValidatePaymentComponent,
+    CheckRecieptComponent,
+
 
 
   ],
@@ -75,10 +87,14 @@ const routes:Routes=[
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     HttpClientModule,
-    CanvasJSAngularChartsModule
+    CanvasJSAngularChartsModule,
+    MatDialogModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [provideToastr()],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],  // Add this line
 })
 export class AppModule {
 

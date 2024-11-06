@@ -10,7 +10,8 @@ export class OrderedList {
     public imageUrl:string,
     public description:string,
     public categoryId:number,
-    public type:string
+    public type:string,
+    public status:string,
   ) {
   }
 

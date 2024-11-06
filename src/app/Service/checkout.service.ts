@@ -1,9 +1,11 @@
 import {Injectable, OnInit} from '@angular/core';
-import {HttpClient,HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {Country} from "../Classes/country";
 import {State} from "../Classes/state";
 import {Orders} from "../Classes/orders";
+import {Page} from "ngx-pagination";
+import {User} from "../Classes/user";
 
 @Injectable({
   providedIn: 'root'
@@ -59,5 +61,24 @@ export class CheckoutService implements OnInit{
     return this.httpClient.get<Array<String>>(`http://localhost:8080/api/Users/getRoles/${id}`);
   }
 
+  getOrders(pageNumber:number,size:number):Observable<Array<Orders>>{
+    let params = new HttpParams();
+    if(pageNumber>-1){
+      console.log(pageNumber)
+      params = params.set('pageNumber',pageNumber);
+    }
+    if(size){
+      params = params.set("size",size)
+    }
+    return  this.httpClient.get<Array<Orders>>(`http://localhost:8080/api/manager/getOrders`,{params});
+  }
+
+  getOrdersById(id:number):Observable<Orders>{
+    return  this.httpClient.get<Orders>(`http://localhost:8080/api/Cart/getOrder/${id}`)
+  }
+
+  getUserByOrderId(id:number):Observable<User>{
+    return this.httpClient.get<User>(` http://localhost:8080/api/manager/GetUserByOrderId/${id}`)
+  }
 
 }

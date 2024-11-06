@@ -1,1 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #fbf9f9;
+}
 
+body {
+  font-family: Arial, sans-serif;
+  /*background: rgb(82, 34, 58);*/
+  /*background: #201f1f;*/
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden; /* Ensure no horizontal scrollbar */
+  color: #0c0c0c;
+}
+
+footer {
+  width: 100vw; /* Set footer width to the entire viewport width */
+  /*background: rgb(82, 34, 58);*/
+  background: #000000;
+  /*background: #FEFAE0;*/
+  margin: 0;
+  padding: 20px; /* Optional padding for inner spacing */
+  color: #fbfafa;
+}
+
+.foot[_ngcontent-ng-c3039835678] li[_ngcontent-ng-c3039835678] a[_ngcontent-ng-c3039835678] {
+  color: #ffffff;
+  font-size: 20px;
+}

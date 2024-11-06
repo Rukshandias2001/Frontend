@@ -10,6 +10,8 @@ import {User} from "../../Classes/user";
 import swal from "sweetalert2";
 import {OrderService} from "../../Service/order.service";
 import Swal from "sweetalert2";
+import {MatDialog} from "@angular/material/dialog";
+import {CheckoutFormComponent} from "../checkout-form/checkout-form.component";
 
 @Component({
   selector: 'app-ordered-items',
@@ -26,6 +28,7 @@ export class OrderedItemsComponent implements OnInit{
   listOfProducts!:Array<Product>;
   sortOption: any;
   discountCode: any;
+  
   ngOnInit(): void {
     this.fetchTheLoad()
     this.calculateTotals();
@@ -39,7 +42,7 @@ export class OrderedItemsComponent implements OnInit{
       }
     )
   }
-  constructor(private selectItemService:SelectedItemServiceService,private router:Router,public orderService:OrderService,public productService:ProductServiceService) {
+  constructor(private selectItemService:SelectedItemServiceService,private router:Router,public orderService:OrderService,public productService:ProductServiceService,private dialog: MatDialog) {
     const loggedInUser = sessionStorage.getItem('loggedInUser');
 
 
@@ -84,7 +87,14 @@ export class OrderedItemsComponent implements OnInit{
   }
 
   checkoutForm() {
-    this.router.navigate(["checkoutForm"])
+    // const dialogRef = this.dialog.open(CheckoutFormComponent, {
+    //   width: '600px',
+    // });
+    //
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
+     this.router.navigate(["checkoutForm"])
   }
 
 

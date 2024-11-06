@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import {AuthServiceService} from "../../Service/auth-service.service";
 
+
 declare var google: any;
 
 @Component({

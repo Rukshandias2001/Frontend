@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {ProductServiceService} from "../../Service/product-service.service";
 import {Product} from "../../Classes/products";
 import {ActivatedRoute, Router, Routes} from "@angular/router";
@@ -169,4 +169,7 @@ export class DisplayProductsComponent implements OnInit{
       confirmButtonText: 'OK'
     });
   }
+
+
+
 }
