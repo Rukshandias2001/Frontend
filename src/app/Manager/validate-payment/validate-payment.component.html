@@ -1,0 +1,39 @@
+<h1>
+  Validate  Payments
+</h1>
+
+<div>
+  <table>
+    <tr>
+      <th>Order Id</th>
+      <th>View Order</th>
+      <th>Paid date</th>
+    </tr>
+
+    <tr *ngFor="let order of listOfProducts">
+      <td>
+        {{order.orderId}}
+      </td>
+
+
+      <td>
+        <button (click)="viewOrder(order.orderId)">
+          View Order
+        </button>
+      </td>
+      <td>{{ order.paidDate | date: 'yyyy-MM-dd' }}</td>
+    </tr>
+  </table>
+
+  <div>
+    <li class="page-item" *ngFor="let item of [].constructor(pages); let i=index"><a class="page-link" (click)="searchProduct(i)" >{{i}}</a></li>
+
+    <li class="page-item">
+      <a class="page-link" (click)="searchProduct(pages-1)" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+
+    </li>
+  </div>
+
+</div>
